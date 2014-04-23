@@ -52,6 +52,7 @@ public class FileBrowseActivity extends ListActivity {
 					@Override
 					public boolean onItemLongClick(AdapterView < ? > arg0,
 							View v, int row, long arg3) {
+						
 						selectRow(v, row);
 						return true;
 					}
@@ -110,7 +111,14 @@ public class FileBrowseActivity extends ListActivity {
 		if (selectedView != null) {
 			selectedView.setBackgroundColor(Color.TRANSPARENT);
 		}
+		
+		
+		
+		for (int i =0;i<this.getListView().getChildCount();i++){
+			((View)this.getListView().getChildAt(i)).setBackgroundColor(Color.TRANSPARENT);
+		}
 		v.setBackgroundColor(Color.CYAN);
+		
 		selectedView = v;
 		selectedRow = adapter.getItem(pos);
 	}

@@ -5,10 +5,12 @@ import android.widget.EditText;
 import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ec504project.application.CoreReconciler;
+import ec504project.application.CoreReconciler.Metrics;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -73,7 +75,18 @@ public class MainActivity extends Activity {
 						File fil = new File(thePath);
 						ips = InetAddress.getByName(ip);
 						
-						new ReconcileTask().execute(fil,ips);
+						try {
+							Metrics m = (new ReconcileTask()).execute(fil,ips).get();
+							String print = "Bandwidth used:\t" + m.bandwidth + " bytes\n"+
+											"Time taken:\t"+m.timeInNs + " ns";
+							Toast.makeText(MainActivity.this,
+									print, Toast.LENGTH_SHORT)
+									.show();
+						}
+						catch (InterruptedException | ExecutionException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 											
 
 						////make toast 
