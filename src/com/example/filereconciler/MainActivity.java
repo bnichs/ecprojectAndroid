@@ -72,7 +72,9 @@ public class MainActivity extends Activity {
 					try {
 						File fil = new File(thePath);
 						ips = InetAddress.getByName(ip);
-						CoreReconciler crc = new CoreReconciler(fil, ips);
+						
+						new ReconcileTask().execute(fil,ips);
+											
 
 						////make toast 
 
